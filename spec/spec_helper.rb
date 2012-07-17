@@ -8,9 +8,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
-  require 'turnip/capybara'
-
-  Dir[Rails.root.join("spec/acceptance/steps/**/*_steps.rb"), Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+  require 'turnip/capybara'  
 
   RSpec.configure do |config|
     config.infer_base_class_for_anonymous_controllers = false
@@ -23,5 +21,6 @@ Spork.prefork do
 end
 
 Spork.each_run do
+  Dir[Rails.root.join("spec/acceptance/steps/**/*_steps.rb"), Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
   FactoryGirl.reload
 end
