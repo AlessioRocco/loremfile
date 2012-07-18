@@ -1,5 +1,6 @@
 class FilersController < ApplicationController
   def show
-    render :nothing => true
+    @filer = Filer.new(params[:name],params[:ext])
+    #send_file(@filer.created_file)
   end
 end
