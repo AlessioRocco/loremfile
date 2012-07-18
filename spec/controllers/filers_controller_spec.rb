@@ -1,22 +1,30 @@
 require 'spec_helper'
 describe FilersController do
   describe "download file" do
-    context "when a pdf file is requested" do
+    context "when a file is requested" do
       
-      let(:filer) { Filer.new("nome", "ext") }
+      let(:file_name){"file_name"}
+      let(:file_ext){"file_ext"}
+      let(:complete_file_name){"#{file_ext}.#{file_ext}"}
       
-      it "should create new Filer" do
-        Filer.should_receive(:new).with(kind_of(String), kind_of(String))
-        Filer.stub(:created_file).and_return("name.ext")
-        get :show, {:name => "file_name", :ext => "pdf"}
+      before(:each) do        
+        @filer = mock(Filer)
+        Filer.stub(:new).and_return(@filer)
+        File.open("#{Rails.root}/tmp/#{complete_file_name}", "w")
+        @filer.stub(:created_file).and_return("#{Rails.root}/tmp/#{complete_file_name}")
       end
       
-      it "should responde with a pdf file" do
-        Filer.any_instance.stub(:created_file).and_return("name.ext")
-        filer.should_receive(:created_file)
-        controller.stub(:send_file)
-        controller.should_receive(:send_file)
-        get :show, {:name => "file_name", :ext => "pdf"}
+      after(:each) do
+        get :show, {:name => file_name, :ext => file_ext}
+      end
+      
+      it "should create new Filer" do
+        Filer.should_receive(:new).with(file_name, file_ext).and_return(@filer)               
+      end
+      
+      it "should responde with a file" do
+        @filer.should_receive(:created_file)
+        controller.should_receive(:send_file).and_return{controller.render :nothing => true}
       end
     end
   end
