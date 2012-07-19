@@ -11,7 +11,7 @@ describe FilersController do
         @filer = mock(Filer)
         Filer.stub(:new).and_return(@filer)
         File.open("#{Rails.root}/tmp/#{complete_file_name}", "w")
-        @filer.stub(:created_file).and_return("#{Rails.root}/tmp/#{complete_file_name}")
+        @filer.stub(:create_file).and_return("#{Rails.root}/tmp/#{complete_file_name}")
       end
       
       after(:each) do
@@ -23,7 +23,7 @@ describe FilersController do
       end
       
       it "should responde with a file" do
-        @filer.should_receive(:created_file)
+        @filer.should_receive(:create_file)
         controller.should_receive(:send_file).and_return{controller.render :nothing => true}
       end
     end
