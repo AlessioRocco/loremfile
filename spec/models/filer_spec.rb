@@ -1,29 +1,42 @@
 require 'spec_helper'
-describe Filer do  
-  before(:each) do
-    @file_name = "file_name"
-    @file_ext = "file_ext"
-    @filer = Filer.new @file_name, @file_ext 
+
+class MockFiler
+  def initialize(*args)
   end
+end
+
+describe Filer do
   
-  describe "#new" do
-    it "set name instance variable" do
-      @filer.name.should eq(@file_name) 
+  describe ".new" do
+    
+    context "when class exists" do
+      
+      it "istantiate the right class based on first parameter (extension)" do
+        MockFiler.should_receive(:new).with("file_name", an_instance_of(Hash))
+        Filer.new "file_name", "mock"
+      end
+      
+      it "assigns the object to instance variable" do
+        filer = Filer.new "file_name", "mock"
+        filer.file_creator.should be_an_instance_of(MockFiler)
+      end      
+    end
+      
+    context "when class doesn't exists" do
+      
+      it "raise an exception" do
+        expect { Filer.new("file_name", "wrong_mock") }.to raise_error
+      end
+      
     end
     
-    it "set ext instance variable" do
-      @filer.ext.should eq(@file_ext)
-    end
   end
   
-  describe "#create_file" do
-    it "generate a file with name and extension from name and ext" do
-      @filer.create_file
-      File.exists?("#{Rails.root}/tmp/#{@file_name}.#{@file_ext}").should eq(true)
-    end
-    
-    it "return the generated file path" do
-      @filer.create_file.should eq("#{Rails.root}/tmp/#{@file_name}.#{@file_ext}")
+  describe "#create" do
+    it "delegates to file_creator" do
+      filer = Filer.new "file_name", "mock"
+      filer.file_creator.should_receive(:create)
+      filer.create
     end
   end
   
