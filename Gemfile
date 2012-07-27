@@ -51,8 +51,10 @@ group :test do
   gem "guard-rspec"
   gem "guard-spork"
   gem "spork-rails"
+  gem "sixarm_ruby_magic_number_type"
 end
 
+gem "prawn"
 gem "mongoid", "~> 3.0.0.rc"
 gem "haml-rails"
 gem "thin"
