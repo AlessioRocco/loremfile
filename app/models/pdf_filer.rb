@@ -1,9 +1,11 @@
 class PdfFiler
   
   attr_reader :file_name
+  attr_reader :options
   
-  def initialize name, args
+  def initialize name, *args
     @file_name = name
+    @options = args.extract_options!
   end
   
   def create
