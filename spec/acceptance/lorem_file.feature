@@ -6,5 +6,3 @@ Feature:Downloading a file
 		Examples:
 			| file_path			| file_name		| ext          |
 			| /myfile.pdf	  | myfile.pdf	| pdf          |
-			| /second.doc		| second.doc	| octet-stream |
-			| /archive.zip	| archive.zip	| zip          |
