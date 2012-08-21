@@ -38,12 +38,14 @@ gem 'jquery-rails'
 
 group :test, :development do
   gem "rspec-rails"
+  gem "factory_girl_rails"
 end
 
 group :test do
   gem "faker"
   gem "turnip"
   gem "capybara"
+  gem "mongoid-rspec"  
   gem "simplecov", :require => false
   gem "growl"
   gem "guard-rspec"
@@ -53,5 +55,6 @@ group :test do
 end
 
 gem "prawn"
+gem "mongoid", "~> 3.0.0.rc"
 gem "haml-rails"
 gem "thin"
