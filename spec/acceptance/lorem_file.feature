@@ -1,8 +1,9 @@
-Feature:Downloading a file
-	Scenario Outline:download a file
-		When I go to "<file_path>"
-		Then I should get a file named "<file_name>" and of "<ext>" mime-type
+Feature: Downloading a file
+	Scenario Outline: Give me a file
+		When I go to "<path>"
+		Then I should get a file named "<file_name>" and of "<ext>" mime-type of size "<size>"
 		
 		Examples:
-			| file_path			| file_name		| ext          |
-			| /myfile.pdf	  | myfile.pdf	| pdf          |
+		 | path             | file_name  | ext | size |
+		 | /myfile.pdf      | myfile.pdf | pdf | 617  |
+		 | /myfile.pdf/1000 | myfile.pdf | pdf | 1000 |
